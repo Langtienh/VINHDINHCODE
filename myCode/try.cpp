@@ -4,52 +4,40 @@
 using namespace std;
 
 int n;
-ll  cmin = LLONG_MAX, s = 0;
-ll d[20][20], tp[20], res[20];
-bool b[20]; // Các thành phố đã đi qua
+ll s = 0, m, smax = LLONG_MIN, w[25], v[25];
+vector<int> v, res;
 
-// Nhập quãng đường
-void enter(){
+void scan(){
     for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= n; j++)
-            cin >> d[i][j];
-}
-
-void Copy(){
-    for (int i = 1; i <= n; i++)
-        res[i] = tp[i];
+        cin >> w[i] >> v[i];
 }
 
 void print(){
-    for (int i = 1; i <= n; i++)
+    int n = res.size();
+    cout << n << endl;
+    for (int i = 0; i < n; i++)
         cout << res[i] << " ";
 }
 
-void diDenTP(int cnt){
-    for (int i = 1; i <= n; i++){
-        if (!b[i]){
-            b[i] = true;
-            tp[cnt] = i;
-            s += d[tp[cnt - 1]][i];
-            if (cnt == n && s < cmin) {
-                cmin = s; Copy();
-            }
-            // Nếu quãng đường cần đi s lớn hơn cmin thì dừng lại không đi nữa
-            else if (s < cmin) diDenTP(cnt + 1);
-            b[i] = false;
-            s-= d[tp[cnt - 1]][i];
-        }
-    }
+void try1(int cnt){
+
+}
+
+void try2(){
+
+}
+
+void solove(){
+
 }
 
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
-    memset(d, false, sizeof(d)); tp[0] = 0;
-    cin >> n; enter();
-    diDenTP(1); // bắt đầu từ tp 0 đi đến các TP khác
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    cin >> n >> m; scan();
+    solove();
     print();
     return 0;
 }
