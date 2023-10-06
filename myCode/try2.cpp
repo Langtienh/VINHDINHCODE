@@ -5,8 +5,8 @@ using namespace std;
 
 int n, m, a[20], cmin = INT_MAX, s = 0;
 bool b[20];
-vector<vector<int> > v;
-vector <int> temp;
+set<set<int> > v;
+set <int> temp;
 
 void scan(){
     for (int i = 0; i < n; i++)
@@ -19,7 +19,7 @@ void print(){
 
 void Try(){
     if (s == m){
-        v.push_back(temp);
+        v.insert(temp);
         if (cmin > temp.size())
             cmin = temp.size();
         return;
@@ -28,11 +28,11 @@ void Try(){
         if (!b[i]){
             s += a[i];
             b[i] = true;
-            temp.push_back(a[i]);
+            temp.insert(a[i]);
             Try();
             s -= a[i];
             b[i] = false;
-            temp.pop_back();
+            temp.erase(a[i]);
         }
     }
 }

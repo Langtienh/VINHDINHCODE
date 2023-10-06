@@ -22,30 +22,13 @@ void print(){
         cout << res[i] << " ";
 }
 
-void Try(int cnt){
-    if (s == m){
-        cntt = cnt;
-        b = true;
-        return;
-    }
-    for (int i = 1; i <= n; i++){
-        if (!t[i]){
-            s += d[i];
-            t[i] = true;
-            res[cnt] = d[i];
-            Try(cnt + 1);
-            s -= d[i];
-            t[i] = false;
-        }
-        if (b) return;
-    }
-}
+
 
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
     cin >> n >> m; scan();
     Try(0);
     print();
