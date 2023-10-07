@@ -54,7 +54,7 @@ void try1(int x, int y){
     }
 }
 
-void slve(){
+void slove(){
     for (int i = 1; i <= m; i++)
         for (int j = 1; j <= n; j++){
             if (!d[i][j]) {
@@ -74,7 +74,7 @@ int main(){
     scan();
     TaoTuong();
     // print();
-    slve();
+    slove();
     cout << se.size() << endl;
     printSet();
     return 0;
