@@ -1,70 +1,62 @@
-#include<bits/stdc++.h>
-#define ll long long
+#pragma GCC optimize("O3")
+#include <iostream>
+#include <queue>
+#define sint short int
 
 using namespace std;
 
-bool d[1002][1002];
-int n, hx1, hx2, hy1, hy2, vx1, vx2, vy1, vy2;
+const sint dx[8] = {1, 1, -1, -1, 2, 2, -2, -2};
+const sint dy[8] = {2, -2, 2, -2, 1, -1, 1, -1};
+bool avail[11][11];
+int f[16][16][16];
 
-void TaoTuong() {
-    for (int i = 0; i < n + 2; i++)
-        d[i][0] = d[0][i] = 1;
-    for (int i = 1; i < n + 2; i++) 
-        d[n + 1][i] = d[i][n + 1] = 1;
-    for (int i = 1; i <= n; i++)
-        d[i][hx1] = d[i][hx2] = d[hy1][i] = d[hy2][i] = 1;
+bool check(sint x, sint y) {
+    return (1 <= x && x <= 10 && 1 <= y && y <= 10);
 }
 
-void print() {
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++)
-            cout << d[i][j] << " ";
-        cout << endl;
-    }
+sint n, num;
+
+void init() {
+    for(sint i=1; i<=10; ++i)
+    for(sint j=1; j<=10; ++j) avail[i][j] = false;
+    num = 0;
 }
 
-bool try1(int x, int y) {
-    if (x == vx2 && y == vy2) {
-        return true;
+void _try(sint x, sint y, sint cnt) {
+    for(sint i=0, u, v; i<8; ++i) {
+        u = x + dx[i], v = y + dy[i];
+        if (check(u, v)) {
+            if (cnt < n) _try(u, v, cnt+1);
+            else if (!avail[u][v]) {
+            	avail[u][v] = true;
+            	++num;
+            }
+        }
     }
-
-    d[y][x] = 1;
-
-    // di doc, di ngang
-    if (!d[y + 1][x] && try1(x + 1, y)) return true;
-    if (!d[y][x + 1] && try1(x, y + 1)) return true;
-    if (!d[y - 1][x] && try1(x - 1, y)) return true;
-    if (!d[y][x - 1] && try1(x, y - 1)) return true;
-
-    // di cheo
-    if (!d[y + 1][x + 1] && try1(x + 1, y + 1)) return true;
-    if (!d[y - 1][x + 1] && try1(x + 1, y - 1)) return true;
-    if (!d[y - 1][x - 1] && try1(x - 1, y - 1)) return true;
-    if (!d[y + 1][x - 1] && try1(x - 1, y + 1)) return true;
-
-    d[y][x] = 0; // Unmark the cell when backtracking
-    return false;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
-    cin >> n;
-    cin >> hx1 >> hy1 >> hx2 >> hy2;
-    cin >> vx1 >> vy1;
-    cin >> vx2 >> vy2;
-    TaoTuong();
-    
-    if (try1(vx1, vy1)) {
-        cout << "YES\n";
-    } else {
-        cout << "NO\n";
+    sint t, x, y;
+    scanf("%hd", &t);
+    while (t--) {
+        scanf("%hd%hd%hd", &x, &y, &n);
+        if (n > 5) {
+             cout << 50 << "\n";
+             continue;
+        }
+        if(f[x][y][n]) {
+            cout << f[x][y][n] << "\n";
+            continue;
+        }
+        init();
+        _try(x, y, 1);
+        f[x][y][n] = f[y][x][n] = f[10-y+1][x][n] = f[y][10 - x + 1][n] = num;
+        x = 10-x+1; y = 10-y+1;
+        f[x][y][n] = f[y][x][n] = f[10-y+1][x][n] = f[y][10 - x + 1][n] = num;
+        cout << num << "\n";
     }
-
-    // Uncomment the line below if you want to print the board
-    // print();
-
     return 0;
 }
+    
