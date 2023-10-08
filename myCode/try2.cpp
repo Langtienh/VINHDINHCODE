@@ -8,7 +8,7 @@ char d[20][20];
 bool b[20][20];
 int dx[4] = {0, 0, 1, -1};
 int dy[4] = {1, -1, 0, 0};
-string smax, temp;
+string smax = "", temp;
 
 void scan(){
     for (int i = 0; i < m; i++)
@@ -27,6 +27,7 @@ void try1(int x, int y){
         if (check(x, y, x2, y2)){
             b[y2][x2] = 1;
             cnt++;
+            temp += d[y2][x2];
             if (cnt > cmax) {
                 cmax = cnt;
                 smax = temp;
