@@ -3,50 +3,68 @@
 
 using namespace std;
 
-bool b[11][11];
-int d[11][11];
-int x, y, u, v, n, cnt;
-const int dx[8] = {2, -2, 2, -2, 1, -1, 1, -1};
-const int dy[8] = {1, 1, -1, -1, 2, 2, -2, -2};
+int m, n, cmax = 1, cnt;
+char d[20][20];
+bool b[20][20];
+int dx[4] = {0, 0, 1, -1};
+int dy[4] = {1, -1, 0, 0};
+string smax, temp;
 
-bool check(int a, int b){
-    return a > 0 && b > 0 && a < 11 && b < 11;
+void scan(){
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            cin >> d[i][j];
 }
 
-void init(){
-    cnt = 0;
-    for (int i = 1; i < 11; i++)
-        for (int j = 1; j < 11; j++) b[i][j] = false;
+bool check(int x, int y, int x2, int y2){
+    return x2 >= 0 && y2 >= 0 && x2 < n && y2 < m && !b[y2][x2] && d[y][x] <= d[y2][x2];
 }
 
-void try1(int x, int y, int k){
-    if (cnt == 50) return;
-    for (int i = 0; i < 8; i++){
-        u = x + dx[i]; v = y + dy[i];
-        if (check(u, v)){
-            if (k == 1){
-                if (!b[u][v]){
-                    cnt++;
-                    b[u][v] = true;
-                }
+void try1(int x, int y){
+    for (int i = 0; i < 4; i++){
+        int x2 = x + dx[i];
+        int y2 = y + dy[i];
+        if (check(x, y, x2, y2)){
+            b[y2][x2] = 1;
+            cnt++;
+            if (cnt > cmax) {
+                cmax = cnt;
+                smax = temp;
             }
-            else try1(u, v, k - 1);
+            try1(x2, y2);
+            b[y2][x2] = 0;
+            cnt--;
+            temp.erase(cnt);
         }
     }
 }
 
+void slove(){
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++){
+            cnt = 1; temp = "";
+            temp += d[i][j];
+            try1(j, i);
+        }
+}
+
+
+void print(){
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++)
+            cout << d[i][j] << " ";
+    cout << endl;
+    }
+}
 
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
-    int t; cin >> t;
-    while(t--){
-        cin >> x >> y >> n;
-        init();
-        try1(x, y, n);
-        cout << cnt << endl;
-    }
+    cin >> m >> n; scan();
+    slove();
+    // print();
+    cout << cmax << " " << smax << endl;
     return 0;
 }
