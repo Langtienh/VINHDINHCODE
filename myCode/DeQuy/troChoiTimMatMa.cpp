@@ -35,7 +35,7 @@ void try1(int x, int y){
             try1(x2, y2);
             b[y2][x2] = 0;
             cnt--;
-            temp.erase(cnt);
+            temp.erase(temp.size() - 1);
         }
     }
 }
@@ -44,8 +44,10 @@ void slove(){
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++){
             cnt = 1; temp = "";
+            b[i][j] = 1;
             temp += d[i][j];
             try1(j, i);
+            b[i][j] = 0;
         }
 }
 
@@ -61,11 +63,12 @@ void print(){
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
     cin >> m >> n; scan();
+    temp = "12"; 
     slove();
     // print();
-    cout << cmax << " " << smax << endl;
+    cout << cmax << endl;
     return 0;
 }
