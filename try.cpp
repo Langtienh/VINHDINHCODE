@@ -1,65 +1,65 @@
 #include <bits/stdc++.h>
 #define ll long long
+#define FOR(i, a, b) for(__typeof(a) i = a; i <= b; ++i)
 
 using namespace std;
 
-ll m, a[23], s, s2;
+ll m, w[41], v[41], sv, sw, cmax, wmin = LLONG_MAX, vmax;
 int n, cnt;
-bool temp[23];
+bool res[41], temp[41], ok;
 
 void scan(){
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
-        s += a[i];
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i] >> v[i];
+        if (w[i] < wmin) wmin = w[i];
+        if (v[i] > vmax) vmax = v[i];
     }
 }
 
 void print(){
-    // cout << s << " " << s2 << endl;
-    for (int i = 1; i <= n; i++){
-        if (temp[i]) cout << 2;
-        else cout << 1;
-    }
-    cout << endl;
+    cout << cmax << endl;
+    // cout << cnt << endl;
+    // for (int i = 1; i <= n; i++)
+    //     if (res[i]) cout << i << " ";
 }
 
-void print2(){
-    for (int i = 1; i <= n; i++) 
-        cout << temp[i];
-    cout << endl;
+void CP(){
+    cnt = 0;
+    for (int i = 1; i <= n; i++){
+        res[i] = temp[i];
+        if (temp[i]) cnt++;
+    }
 }
-void printArr(){
-    for (int i = 1; i <= n; i++)
-        cout << a[i];
-    cout << endl;
+
+bool check(int k){
+    if (sw > m) return false;
+    if (sv + vmax * (n - k) < cmax) return false;
+    return true;
 }
 
 void try1(int k){ 
-    if (k == n + 1) {
-        if (s2 == s - s2) {
-            print();
-            cnt++;
-        }
+    if (k == n + 1){
+        if (sw <= m)
+            if (sv > cmax){
+                cmax = sv;
+                CP();
+            }
         return;
     }
     try1(k + 1);
-    temp[k] = 1;
-    s2 += a[k];
-    if (s2 <= s - s2) try1(k + 1);
-    s2 -= a[k];
-    temp[k] = 0;
+    sw += w[k]; sv += v[k]; temp[k] = 1;
+    if (check(k)) try1(k + 1);
+    sw -= w[k]; sv -= v[k]; temp[k] = 0;
 }
 
-int main() {    
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
-    cnt = s = s2 = 0;
-    cin >> n; scan(); 
-    // printArr();
+    cin >> n >> m; scan();
     try1(1);
-    if (cnt == 0) cout << -1 << endl;
+    print();
     return 0;
 }
     
