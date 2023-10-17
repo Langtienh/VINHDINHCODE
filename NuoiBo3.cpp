@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int n, a[15], cnt, sum, sum2, res;
+int n, a[15], cnt, sum, sum2, res = 15;
 
 void enter(){
     cin >> n;
@@ -31,8 +31,8 @@ void try1(int v){
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
     enter();
     try1(0);
     cout << res << endl;

@@ -31,7 +31,7 @@ void try1(int v){
         if (a[i][v] >= res[v - 1] || v == 0) {
             res[v] = a[i][v];
             sum += a[i][v];
-            try1(v + 1);
+            if (sum <= s) try1(v + 1);
             sum -= a[i][v];
         }
         if (b) return;
